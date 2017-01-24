@@ -27,7 +27,7 @@ import java.util.zip.GZIPInputStream;
 
 public class RxJavaExample extends Application {
 
-    //timeu
+    //time
     static public String label;
     static String dt = "2012-01-01";
     static public int finish_hour = 0;
@@ -36,12 +36,9 @@ public class RxJavaExample extends Application {
     static public int start_minute = 0;
     static public String start_date = dt;
     static public String finish_date = "";
-
     static int hour = 0;
     static int timestamp;
-
     //GUI
-
     static public ObservableList<Person> createLocalPush = FXCollections.observableArrayList();
     static public ObservableList<Person> createLocalCreate = FXCollections.observableArrayList();
     static public ObservableList<Person> createLocalWatch = FXCollections.observableArrayList();
@@ -73,7 +70,6 @@ public class RxJavaExample extends Application {
         launch(names);
     }
 
-
     @Override
     public void start(Stage primaryStage) throws IOException {
 
@@ -87,11 +83,9 @@ public class RxJavaExample extends Application {
 
         Scene scene = new Scene(root);
         primaryStage.setResizable(false);
-        primaryStage.setTitle("Hello World!");
+        primaryStage.setTitle("GitHub Analysis");
         primaryStage.setScene(scene);
         primaryStage.show();
-
-
     }
 
     @Override
@@ -108,7 +102,6 @@ public class RxJavaExample extends Application {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -1);
         yesterday = dateFormat.format(cal.getTime());
-
         Calendar c = Calendar.getInstance();
         c.setTime(dateFormat.parse(dt));
 
@@ -126,12 +119,10 @@ public class RxJavaExample extends Application {
                 stringObservable.subscribe(mo);
                 hour++;
                 events.clear();
-
             }
             hour = 0;
             c.add(Calendar.DATE, 1);  // number of days to add
             dt = dateFormat.format(c.getTime());
         }
     }
-
 }

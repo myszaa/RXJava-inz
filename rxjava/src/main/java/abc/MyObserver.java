@@ -1,6 +1,5 @@
 package abc;
 
-
 import org.json.JSONObject;
 import rx.Observer;
 
@@ -18,7 +17,6 @@ public class MyObserver implements Observer<String> {
 
     public MyObserver() throws FileNotFoundException {
     }
-
 
     public void onCompleted() {
     }
@@ -45,11 +43,8 @@ public class MyObserver implements Observer<String> {
         }
         time_package.add(obj);
 
-        for (int i = 0; i < 500000; i++) {
+        for (int i = 0; i < 800000; i++) {
             Math.random();
         }
-
     }
-
-
 }

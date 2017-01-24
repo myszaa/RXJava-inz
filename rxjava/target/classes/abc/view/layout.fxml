@@ -15,7 +15,7 @@
                <children>
                   <AnchorPane prefHeight="23.0" prefWidth="636.0">
                      <children>
-                        <Label fx:id="global" layoutX="149.0" layoutY="-1.0" prefHeight="51.0" prefWidth="358.0" text="Global statistics" textAlignment="CENTER">
+                        <Label fx:id="global" layoutX="14.0" prefHeight="51.0" prefWidth="358.0" text="Global statistics" textAlignment="CENTER">
                            <font>
                               <Font name="System Bold" size="28.0" />
                            </font>

@@ -14,7 +14,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-
 public class PersonOverviewController {
     @FXML
     private TableView<Person> personTableGlobal;
@@ -53,19 +52,14 @@ public class PersonOverviewController {
     private ObservableList<PieChart.Data> pieChartDataLocal =
             FXCollections.observableArrayList();
 
-
     private RxJavaExample mainApp;
-
-
 
     public PersonOverviewController() {
     }
 
-
     @FXML
     private void initialize() {
         local.setText("Local statistics");
-        // Initialize the person table with the two columns.
         nickColumnGlobal.setCellValueFactory(cellData -> cellData.getValue().nickProperty());
         amountColumnGlobal.setCellValueFactory(cellData -> cellData.getValue().amountProperty());
         nickColumnLocal.setCellValueFactory(cellData -> cellData.getValue().nickProperty());
@@ -119,7 +113,6 @@ public class PersonOverviewController {
                         pieChartDataGlobal.add(new PieChart.Data(p.getNick(), Double.valueOf(p.getAmount())));
                     }
                 }
-
             }
         });
 
@@ -160,16 +153,13 @@ public class PersonOverviewController {
                         pieChartDataLocal.add(new PieChart.Data(p.getNick(), Double.valueOf(p.getAmount())));
                     }
                 }
-
             }
         });
-
     }
 
     public void setMainApp(RxJavaExample mainApp) {
         this.mainApp = mainApp;
 
-        // Add observable list data to the table
         if (mainApp.createGlobalPush != null) personTableGlobal.setItems(mainApp.createGlobalPush);
         changeListenerGlobal = new ListChangeListener<Person>() {
             @Override
@@ -228,5 +218,4 @@ public class PersonOverviewController {
             chartLocal.setData(pieChartDataLocal);
         }
     }
-
 }

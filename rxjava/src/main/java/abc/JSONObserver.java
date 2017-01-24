@@ -1,6 +1,5 @@
 package abc;
 
-
 import abc.json.Actor;
 import abc.json.Repo;
 import abc.model.Person;
@@ -65,10 +64,8 @@ public class JSONObserver implements Observer<JSONObject> {
     String startMinute;
     String finishMinute;
 
-
     public JSONObserver() throws FileNotFoundException {
     }
-
 
     public void onCompleted() {
 
@@ -89,7 +86,6 @@ public class JSONObserver implements Observer<JSONObject> {
             finishMinute = "0" + finishMinute;
 
         rxJavaExample.label = startDate + " " + startHour + ":" + startMinute + " -> " + finishDate + " " + finishHour + ":" + finishMinute;
-
 
         for (Map.Entry<Integer, Integer> entry : actorMapPushEventLocal.entrySet()) {
             if (!actorMapPushEventGlobal.containsKey(entry.getKey())) {
@@ -123,7 +119,6 @@ public class JSONObserver implements Observer<JSONObject> {
             }
         }
 
-
         actorMapCreateEventSortedLocal = actorMapCreateEventLocal.entrySet().stream().
                 sorted(Map.Entry.comparingByValue(Collections.reverseOrder())).
                 collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
@@ -138,7 +133,6 @@ public class JSONObserver implements Observer<JSONObject> {
                 licznik++;
             } else break;
         }
-
 
         actorMapPushEventSortedLocal = actorMapPushEventLocal.entrySet().stream().
                 sorted(Map.Entry.comparingByValue(Collections.reverseOrder())).
@@ -170,7 +164,6 @@ public class JSONObserver implements Observer<JSONObject> {
             } else break;
         }
 
-
         actorMapPullEventSortedLocal = actorMapPullEventLocal.entrySet().stream().
                 sorted(Map.Entry.comparingByValue(Collections.reverseOrder())).
                 collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
@@ -186,7 +179,6 @@ public class JSONObserver implements Observer<JSONObject> {
             } else break;
         }
 
-
         actorMapCreateEventSortedGlobal = actorMapCreateEventGlobal.entrySet().stream().
                 sorted(Map.Entry.comparingByValue(Collections.reverseOrder())).
                 collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
@@ -201,7 +193,6 @@ public class JSONObserver implements Observer<JSONObject> {
                 licznik++;
             } else break;
         }
-
 
         actorMapPushEventSortedGlobal = actorMapPushEventGlobal.entrySet().stream().
                 sorted(Map.Entry.comparingByValue(Collections.reverseOrder())).
@@ -233,7 +224,6 @@ public class JSONObserver implements Observer<JSONObject> {
             } else break;
         }
 
-
         actorMapPullEventSortedGlobal = actorMapPullEventGlobal.entrySet().stream().
                 sorted(Map.Entry.comparingByValue(Collections.reverseOrder())).
                 collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
@@ -262,7 +252,6 @@ public class JSONObserver implements Observer<JSONObject> {
                 rxJavaExample.createGlobalPull.clear();
                 rxJavaExample.createGlobalPush.clear();
 
-
                 rxJavaExample.createLocalPush.addAll(actorMapPushEventSortedOutLocal);
                 rxJavaExample.createLocalWatch.addAll(actorMapWatchEventSortedOutLocal);
                 rxJavaExample.createLocalCreate.addAll(actorMapCreateEventSortedOutLocal);
@@ -285,7 +274,6 @@ public class JSONObserver implements Observer<JSONObject> {
             }
         });
 
-
         rxJavaExample.start_date = finishDate;
         rxJavaExample.start_hour = rxJavaExample.finish_hour;
         rxJavaExample.start_minute = rxJavaExample.finish_minute;
@@ -307,7 +295,6 @@ public class JSONObserver implements Observer<JSONObject> {
         } else if (obj.getString("type").equals("PullRequestEvent")) {
             pullEvent(obj);
         }
-
     }
 
     static void createEvent(JSONObject obj) {
@@ -341,6 +328,7 @@ public class JSONObserver implements Observer<JSONObject> {
         } else {
             actorMapPushEventLocal.put(actor.getId(), actorMapPushEventLocal.get(actor.getId()) + 1);
         }
+
         JSONObject object2 = obj.getJSONObject("repo");
         Repo repo = new Repo(object2.getInt("id"), object2.getString("name"));
         repos.add(repo);
@@ -362,6 +350,7 @@ public class JSONObserver implements Observer<JSONObject> {
         } else {
             actorMapWatchEventLocal.put(actor.getId(), actorMapWatchEventLocal.get(actor.getId()) + 1);
         }
+
         JSONObject object2 = obj.getJSONObject("repo");
         Repo repo = new Repo(object2.getInt("id"), object2.getString("name"));
         repos.add(repo);
@@ -383,6 +372,7 @@ public class JSONObserver implements Observer<JSONObject> {
         } else {
             actorMapPullEventLocal.put(actor.getId(), actorMapPullEventLocal.get(actor.getId()) + 1);
         }
+
         JSONObject object2 = obj.getJSONObject("repo");
         Repo repo = new Repo(object2.getInt("id"), object2.getString("name"));
         repos.add(repo);
@@ -410,6 +400,5 @@ public class JSONObserver implements Observer<JSONObject> {
         actorMapPullEventLocal.clear();
         actorMapPullEventSortedLocal.clear();
         repoMapPullEventLocal.clear();
-
     }
 }
