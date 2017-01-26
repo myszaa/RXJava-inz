@@ -8,6 +8,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
 import rx.Observable;
 
@@ -21,15 +24,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.zip.GZIPInputStream;
 
 public class RxJavaExample extends Application {
 
     //time
     static public String label;
-    static String dt = "2012-01-01";
+    static public String dt = "2012-01-01";
     static public int finish_hour = 0;
     static public int finish_minute = 0;
     static public int start_hour = 0;
@@ -37,7 +38,11 @@ public class RxJavaExample extends Application {
     static public String start_date = dt;
     static public String finish_date = "";
     static int hour = 0;
-    static int timestamp;
+    static public int timestamp = 23;
+    static public String yesterday = "";
+    static Calendar cal = null;
+    static Calendar c;
+    static DateFormat dateFormat;
     //GUI
     static public ObservableList<Person> createLocalPush = FXCollections.observableArrayList();
     static public ObservableList<Person> createLocalCreate = FXCollections.observableArrayList();
@@ -49,24 +54,18 @@ public class RxJavaExample extends Application {
     static public ObservableList<Person> createGlobalWatch = FXCollections.observableArrayList();
     static public ObservableList<Person> createGlobalPull = FXCollections.observableArrayList();
 
-    public static void main(String... names) {
+    public TextInputDialog dialog;
+    public Alert alert;
 
-        Runnable r = new Runnable() {
-            public void run() {
-                try {
-                    runYourBackgroundTaskHere();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
 
-        ExecutorService executor = Executors.newCachedThreadPool();
-        executor.submit(r);
+    public static void main(String... names) throws ParseException {
+        dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -1);
+        yesterday = dateFormat.format(cal.getTime());
+        c = Calendar.getInstance();
+        c.setTime(dateFormat.parse(dt));
+
         launch(names);
     }
 
@@ -93,17 +92,11 @@ public class RxJavaExample extends Application {
         System.exit(0);
     }
 
-    static void runYourBackgroundTaskHere() throws ParseException, InterruptedException, IOException {
+    static public void runYourBackgroundTaskHere() throws ParseException, InterruptedException, IOException {
 
         MyObserver mo = new MyObserver();
         ArrayList<String> events = new ArrayList<String>();
-        String yesterday = "";
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, -1);
-        yesterday = dateFormat.format(cal.getTime());
-        Calendar c = Calendar.getInstance();
-        c.setTime(dateFormat.parse(dt));
+
 
         while (!dt.equals(yesterday)) {
             while (hour < 24) {
@@ -114,7 +107,7 @@ public class RxJavaExample extends Application {
                 String content = null;
                 while ((content = in.readLine()) != null)
                     events.add(content);
-                finish_date = dt;
+                finish_date = start_date;
                 Observable<String> stringObservable = Observable.from(events);
                 stringObservable.subscribe(mo);
                 hour++;

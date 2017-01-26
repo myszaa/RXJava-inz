@@ -8,11 +8,34 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.util.Callback;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+import org.joda.time.format.DateTimeFormat;
+
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Optional;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class PersonOverviewController {
     @FXML
@@ -48,11 +71,21 @@ public class PersonOverviewController {
     @FXML
     public Label local;
 
+    @FXML
+    public MenuItem setTimeboxItem;
+
+    @FXML
+    public MenuItem startAnalysisItem;
+
+    @FXML
+    public MenuItem startDateItem;
+
     private ListChangeListener<Person> changeListenerLocal;
     private ObservableList<PieChart.Data> pieChartDataLocal =
             FXCollections.observableArrayList();
 
     private RxJavaExample mainApp;
+    public DatePicker datePicker = new DatePicker();
 
     public PersonOverviewController() {
     }
@@ -217,5 +250,136 @@ public class PersonOverviewController {
             mainApp.createLocalPush.addListener(changeListenerLocal);
             chartLocal.setData(pieChartDataLocal);
         }
+    }
+
+    public void closeExit(ActionEvent event) {
+        System.exit(0);
+    }
+
+    public void setTimebox(ActionEvent event) {
+        try {
+            mainApp.dialog = new TextInputDialog(String.valueOf(mainApp.timestamp));
+            mainApp.dialog.setTitle("Timebox");
+            mainApp.dialog.setHeaderText("Timebox between 0 - 60 minutes");
+            mainApp.dialog.setContentText("Please enter your timebox:");
+            Optional<String> result = mainApp.dialog.showAndWait();
+            if (result.isPresent()) {
+                if (Integer.valueOf(result.get()) <= 0 || Integer.valueOf(result.get()) > 59) {
+                    mainApp.alert = new Alert(Alert.AlertType.ERROR);
+                    mainApp.alert.setTitle("Error");
+                    mainApp.alert.setContentText("Please entry correct value!");
+                    if (Integer.valueOf(result.get()) <= 0) mainApp.alert.setHeaderText("You entry too small value");
+                    else mainApp.alert.setHeaderText("You entry too large value");
+                    mainApp.alert.showAndWait();
+                    setTimebox(null);
+                } else
+                    mainApp.timestamp = Integer.valueOf(result.get());
+            }
+        } catch (NumberFormatException e) {
+            mainApp.alert = new Alert(Alert.AlertType.ERROR);
+            mainApp.alert.setTitle("Error");
+            mainApp.alert.setContentText("Please entry correct value!");
+            mainApp.alert.setHeaderText("You didn't entry number");
+            mainApp.alert.showAndWait();
+            setTimebox(null);
+        }
+    }
+
+    public void startAnalysis(ActionEvent event) {
+        setTimeboxItem.setDisable(true);
+        startAnalysisItem.setVisible(false);
+        startDateItem.setDisable(true);
+
+
+        Runnable r = new Runnable() {
+            public void run() {
+                try {
+                    mainApp.runYourBackgroundTaskHere();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        ExecutorService executor = Executors.newCachedThreadPool();
+        executor.submit(r);
+    }
+
+    public void setStartDate(ActionEvent event) throws ParseException {
+        Stage dialog = new Stage();
+        dialog.initStyle(StageStyle.DECORATED);
+        VBox layout = new VBox();
+        layout.setPadding(new Insets(10, 50, 50, 50));
+        layout.setSpacing(20);
+        Label lbl = new Label("Set start date");
+        lbl.setFont(Font.font("Amble CN", FontWeight.BOLD, 20));
+        layout.getChildren().add(lbl);
+
+        Scene scene = new Scene(layout, 250, 150);
+        dialog.setResizable(false);
+        dialog.setScene(scene);
+        dialog.setTitle("Start date");
+        dialog.show();
+        datePicker = new DatePicker();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date start = sdf.parse(mainApp.dt);
+        Date yesterday = sdf.parse(mainApp.yesterday);
+        int days = Days.daysBetween(new DateTime(start), new DateTime(yesterday)).getDays();
+
+
+        layout.getChildren().add(datePicker);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate actuallStartDate = LocalDate.parse(mainApp.start_date, formatter);
+
+        datePicker.setValue(actuallStartDate);
+        Callback<DatePicker, DateCell> dayCellFactory =
+                new Callback<DatePicker, DateCell>() {
+                    @Override
+                    public DateCell call(final DatePicker datePicker) {
+                        return new DateCell() {
+                            @Override
+                            public void updateItem(LocalDate item, boolean empty) {
+                                super.updateItem(item, empty);
+
+                                if (item.isBefore(
+                                        LocalDate.of(2012,1,1).plusDays(0))
+                                        ) {
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #ffc0cb;");
+                                }
+
+                                if (item.isAfter(
+                                        LocalDate.of(2012,1,1).plusDays(days))
+                                        ) {
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #ffc0cb;");
+                                }
+                            }
+                        };
+                    }
+                };
+        datePicker.setDayCellFactory(dayCellFactory);
+
+        datePicker.setOnAction(event1 -> {
+            LocalDate date = datePicker.getValue();
+            mainApp.start_date = date.toString();
+        });
+
+
+
+        Button btn = new Button();
+        btn.setText("OK");
+        btn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                dialog.close();
+            }
+        });
+        layout.getChildren().add(btn);
+        layout.setAlignment(Pos.CENTER);
     }
 }

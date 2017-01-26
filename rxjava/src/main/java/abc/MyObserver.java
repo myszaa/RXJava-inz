@@ -9,11 +9,12 @@ import java.util.ArrayList;
 
 public class MyObserver implements Observer<String> {
 
-    static int timestamp = 23; //timesloty co 23 min
-    static int temp_timestamp = timestamp;
+    //static int timestamp = 23; //timesloty co 23 min
+
     ArrayList<JSONObject> time_package = new ArrayList<JSONObject>();
     JSONObserver jsonObserver = new JSONObserver();
     RxJavaExample rxJavaExample = new RxJavaExample();
+    int temp_timestamp = rxJavaExample.timestamp;
 
     public MyObserver() throws FileNotFoundException {
     }
@@ -26,7 +27,6 @@ public class MyObserver implements Observer<String> {
     }
 
     public void onNext(String line) {
-        rxJavaExample.timestamp = timestamp;
         JSONObject obj = new JSONObject(line);
         String date = obj.getString("created_at");
         String[] date_splited = date.split("T");
@@ -37,7 +37,7 @@ public class MyObserver implements Observer<String> {
             rxJavaExample.finish_hour = Integer.valueOf(time_splited[0]);
             rx.Observable<JSONObject> jsonObservable = rx.Observable.from(time_package);
             jsonObservable.subscribe(jsonObserver);
-            temp_timestamp += timestamp;
+            temp_timestamp += rxJavaExample.timestamp;
             if (temp_timestamp > 59) temp_timestamp -= 60;
             time_package.clear();
         }

@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="rxjava:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/rxjava_jar</output-path>
+    <root id="archive" name="rxjava.jar">
+      <element id="module-output" name="rxjava" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/github/davidmoten/rxjava-extras/0.7/rxjava-extras-0.7.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/json/json/20160810/json-20160810.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/io/reactivex/rxjava-string/1.1.1/rxjava-string-1.1.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/io/reactivex/rxjava/1.2.5/rxjava-1.2.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/github/davidmoten/rxjava-file/0.4/rxjava-file-0.4.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
