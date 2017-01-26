@@ -25,11 +25,6 @@
                         <MenuItem fx:id="startDateItem" mnemonicParsing="false" onAction="#setStartDate" text="Start date" />
                   </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
-                  </items>
-                </Menu>
               </menus>
             </MenuBar>
             <AnchorPane prefHeight="735.0" prefWidth="1278.0">
