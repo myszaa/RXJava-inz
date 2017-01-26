@@ -9,7 +9,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
 import rx.Observable;
@@ -57,7 +56,6 @@ public class RxJavaExample extends Application {
     public TextInputDialog dialog;
     public Alert alert;
 
-
     public static void main(String... names) throws ParseException {
         dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         cal = Calendar.getInstance();
@@ -65,7 +63,6 @@ public class RxJavaExample extends Application {
         yesterday = dateFormat.format(cal.getTime());
         c = Calendar.getInstance();
         c.setTime(dateFormat.parse(dt));
-
         launch(names);
     }
 
@@ -96,7 +93,6 @@ public class RxJavaExample extends Application {
 
         MyObserver mo = new MyObserver();
         ArrayList<String> events = new ArrayList<String>();
-
 
         while (!dt.equals(yesterday)) {
             while (hour < 24) {

@@ -39,7 +39,6 @@ public class JSONObserver implements Observer<JSONObject> {
     static LinkedHashMap<Integer, Integer> actorMapPullEventSortedLocal = null;
     static HashMap<Integer, Integer> repoMapPullEventLocal = new HashMap<Integer, Integer>();
 
-
     static ArrayList<Person> actorMapCreateEventSortedOutGlobal = new ArrayList<Person>();
     static ArrayList<Person> actorMapWatchEventSortedOutGlobal = new ArrayList<Person>();
     static ArrayList<Person> actorMapPushEventSortedOutGlobal = new ArrayList<Person>();

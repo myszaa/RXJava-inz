@@ -9,10 +9,8 @@ import java.util.ArrayList;
 
 public class MyObserver implements Observer<String> {
 
-    //static int timestamp = 23; //timesloty co 23 min
-
     ArrayList<JSONObject> time_package = new ArrayList<JSONObject>();
-    JSONObserver jsonObserver = new JSONObserver();
+    DelayObserver delayObserver = new DelayObserver();
     RxJavaExample rxJavaExample = new RxJavaExample();
     int temp_timestamp = rxJavaExample.timestamp;
 
@@ -36,15 +34,13 @@ public class MyObserver implements Observer<String> {
             rxJavaExample.finish_minute = temp_timestamp;
             rxJavaExample.finish_hour = Integer.valueOf(time_splited[0]);
             rx.Observable<JSONObject> jsonObservable = rx.Observable.from(time_package);
-            jsonObservable.subscribe(jsonObserver);
+            jsonObservable.subscribe(delayObserver);
             temp_timestamp += rxJavaExample.timestamp;
             if (temp_timestamp > 59) temp_timestamp -= 60;
             time_package.clear();
         }
         time_package.add(obj);
 
-        for (int i = 0; i < 800000; i++) {
-            Math.random();
-        }
+
     }
 }

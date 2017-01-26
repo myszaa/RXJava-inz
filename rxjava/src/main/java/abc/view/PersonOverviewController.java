@@ -13,8 +13,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -23,19 +21,16 @@ import javafx.stage.StageStyle;
 import javafx.util.Callback;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
-import org.joda.time.format.DateTimeFormat;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 public class PersonOverviewController {
     @FXML
@@ -290,7 +285,6 @@ public class PersonOverviewController {
         startAnalysisItem.setVisible(false);
         startDateItem.setDisable(true);
 
-
         Runnable r = new Runnable() {
             public void run() {
                 try {
@@ -330,7 +324,6 @@ public class PersonOverviewController {
         Date yesterday = sdf.parse(mainApp.yesterday);
         int days = Days.daysBetween(new DateTime(start), new DateTime(yesterday)).getDays();
 
-
         layout.getChildren().add(datePicker);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate actuallStartDate = LocalDate.parse(mainApp.start_date, formatter);
@@ -346,14 +339,14 @@ public class PersonOverviewController {
                                 super.updateItem(item, empty);
 
                                 if (item.isBefore(
-                                        LocalDate.of(2012,1,1).plusDays(0))
+                                        LocalDate.of(2012, 1, 1).plusDays(0))
                                         ) {
                                     setDisable(true);
                                     setStyle("-fx-background-color: #ffc0cb;");
                                 }
 
                                 if (item.isAfter(
-                                        LocalDate.of(2012,1,1).plusDays(days))
+                                        LocalDate.of(2012, 1, 1).plusDays(days))
                                         ) {
                                     setDisable(true);
                                     setStyle("-fx-background-color: #ffc0cb;");
@@ -363,13 +356,10 @@ public class PersonOverviewController {
                     }
                 };
         datePicker.setDayCellFactory(dayCellFactory);
-
         datePicker.setOnAction(event1 -> {
             LocalDate date = datePicker.getValue();
             mainApp.start_date = date.toString();
         });
-
-
 
         Button btn = new Button();
         btn.setText("OK");
