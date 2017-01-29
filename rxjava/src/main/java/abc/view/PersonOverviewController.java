@@ -216,7 +216,7 @@ public class PersonOverviewController {
         changeListenerLocal = new ListChangeListener<Person>() {
             @Override
             public void onChanged(Change<? extends Person> change) {
-                local.setText(mainApp.label);
+                local.setText(mainApp.labelLocal);
                 while (change.next()) {
                     if (change.wasAdded()) {
                         for (Person p : change.getAddedSubList()) {
@@ -320,7 +320,7 @@ public class PersonOverviewController {
         dialog.show();
         datePicker = new DatePicker();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date start = sdf.parse(mainApp.dt);
+        Date start = sdf.parse(mainApp.start_date);
         Date yesterday = sdf.parse(mainApp.yesterday);
         int days = Days.daysBetween(new DateTime(start), new DateTime(yesterday)).getDays();
 

@@ -84,7 +84,7 @@ public class JSONObserver implements Observer<JSONObject> {
         if (rxJavaExample.finish_minute < 10)
             finishMinute = "0" + finishMinute;
 
-        rxJavaExample.label = startDate + " " + startHour + ":" + startMinute + " -> " + finishDate + " " + finishHour + ":" + finishMinute;
+        rxJavaExample.labelLocal = startDate + " " + startHour + ":" + startMinute + " -> " + finishDate + " " + finishHour + ":" + finishMinute;
 
         for (Map.Entry<Integer, Integer> entry : actorMapPushEventLocal.entrySet()) {
             if (!actorMapPushEventGlobal.containsKey(entry.getKey())) {

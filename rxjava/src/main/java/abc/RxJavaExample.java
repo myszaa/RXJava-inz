@@ -28,13 +28,12 @@ import java.util.zip.GZIPInputStream;
 public class RxJavaExample extends Application {
 
     //time
-    static public String label;
-    static public String dt = "2012-01-01";
+    static public String labelLocal;
     static public int finish_hour = 0;
     static public int finish_minute = 0;
     static public int start_hour = 0;
     static public int start_minute = 0;
-    static public String start_date = dt;
+    static public String start_date = "2012-01-01";
     static public String finish_date = "";
     static int hour = 0;
     static public int timestamp = 23;
@@ -62,7 +61,7 @@ public class RxJavaExample extends Application {
         cal.add(Calendar.DATE, -1);
         yesterday = dateFormat.format(cal.getTime());
         c = Calendar.getInstance();
-        c.setTime(dateFormat.parse(dt));
+        c.setTime(dateFormat.parse(start_date));
         launch(names);
     }
 
@@ -94,7 +93,7 @@ public class RxJavaExample extends Application {
         MyObserver mo = new MyObserver();
         ArrayList<String> events = new ArrayList<String>();
 
-        while (!dt.equals(yesterday)) {
+        while (!start_date.equals(yesterday)) {
             while (hour < 24) {
                 String url = "http://data.githubarchive.org/" + start_date + "-" + hour + ".json.gz";
                 InputStream input = new URL(url).openStream();
@@ -111,7 +110,7 @@ public class RxJavaExample extends Application {
             }
             hour = 0;
             c.add(Calendar.DATE, 1);  // number of days to add
-            dt = dateFormat.format(c.getTime());
+            start_date = dateFormat.format(c.getTime());
         }
     }
 }
