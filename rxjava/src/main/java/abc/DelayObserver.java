@@ -29,7 +29,7 @@ public class DelayObserver implements Observer<JSONObject> {
 
     @Override
     public void onNext(JSONObject jsonObject) {
-        for (int i = 0; i < 1500000; i++) {
+        for (int i = 0; i < 300000; i++) {
             Math.random();
         }
         time_package.add(jsonObject);

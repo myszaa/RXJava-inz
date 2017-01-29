@@ -96,7 +96,7 @@ public class RxJavaExample extends Application {
 
         while (!dt.equals(yesterday)) {
             while (hour < 24) {
-                String url = "http://data.githubarchive.org/" + dt + "-" + hour + ".json.gz";
+                String url = "http://data.githubarchive.org/" + start_date + "-" + hour + ".json.gz";
                 InputStream input = new URL(url).openStream();
                 InputStreamReader isr = new InputStreamReader(new GZIPInputStream(input));
                 BufferedReader in = new BufferedReader(isr);
