@@ -11,8 +11,8 @@ public class MyObserver implements Observer<String> {
 
     ArrayList<JSONObject> time_package = new ArrayList<JSONObject>();
     DelayObserver delayObserver = new DelayObserver();
-    RxJavaExample rxJavaExample = new RxJavaExample();
-    int temp_timestamp = rxJavaExample.timestamp;
+    RxJava rxJava = new RxJava();
+    int temp_timestamp = rxJava.timestamp;
 
     public MyObserver() throws FileNotFoundException {
     }
@@ -31,11 +31,11 @@ public class MyObserver implements Observer<String> {
         String[] time_splited = date_splited[1].split(":"); //minuta
         Integer minute = Integer.valueOf(time_splited[1]);
         if (minute == temp_timestamp) {
-            rxJavaExample.finish_minute = temp_timestamp;
-            rxJavaExample.finish_hour = Integer.valueOf(time_splited[0]);
+            rxJava.finish_minute = temp_timestamp;
+            rxJava.finish_hour = Integer.valueOf(time_splited[0]);
             rx.Observable<JSONObject> jsonObservable = rx.Observable.from(time_package);
             jsonObservable.subscribe(delayObserver);
-            temp_timestamp += rxJavaExample.timestamp;
+            temp_timestamp += rxJava.timestamp;
             if (temp_timestamp > 59) temp_timestamp -= 60;
             time_package.clear();
         }

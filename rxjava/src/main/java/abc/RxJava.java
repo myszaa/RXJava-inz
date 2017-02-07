@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.zip.GZIPInputStream;
 
-public class RxJavaExample extends Application {
+public class RxJava extends Application {
 
     //time
     static public String labelLocal;
@@ -69,7 +69,7 @@ public class RxJavaExample extends Application {
     public void start(Stage primaryStage) throws IOException {
 
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(RxJavaExample.class.getResource("/abc/view/layout.fxml"));
+        loader.setLocation(RxJava.class.getResource("/abc/view/layout.fxml"));
 
         Parent root = loader.load();
 

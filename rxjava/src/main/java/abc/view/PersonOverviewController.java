@@ -1,6 +1,6 @@
 package abc.view;
 
-import abc.RxJavaExample;
+import abc.RxJava;
 import abc.model.Person;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -79,7 +79,7 @@ public class PersonOverviewController {
     private ObservableList<PieChart.Data> pieChartDataLocal =
             FXCollections.observableArrayList();
 
-    private RxJavaExample mainApp;
+    private RxJava mainApp;
     public DatePicker datePicker = new DatePicker();
 
     public PersonOverviewController() {
@@ -185,7 +185,7 @@ public class PersonOverviewController {
         });
     }
 
-    public void setMainApp(RxJavaExample mainApp) {
+    public void setMainApp(RxJava mainApp) {
         this.mainApp = mainApp;
 
         if (mainApp.createGlobalPush != null) personTableGlobal.setItems(mainApp.createGlobalPush);

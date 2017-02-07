@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class JSONObserver implements Observer<JSONObject> {
 
-    RxJavaExample rxJavaExample = new RxJavaExample();
+    RxJava rxJava = new RxJava();
     static HashSet<Actor> actors = new HashSet<Actor>();
     static HashSet<Repo> repos = new HashSet<Repo>();
 
@@ -68,23 +68,23 @@ public class JSONObserver implements Observer<JSONObject> {
 
     public void onCompleted() {
 
-        startDate = rxJavaExample.start_date;
-        finishDate = rxJavaExample.finish_date;
-        startHour = String.valueOf(rxJavaExample.start_hour);
-        finishHour = String.valueOf(rxJavaExample.finish_hour);
-        startMinute = String.valueOf(rxJavaExample.start_minute);
-        finishMinute = String.valueOf(rxJavaExample.finish_minute);
+        startDate = rxJava.start_date;
+        finishDate = rxJava.finish_date;
+        startHour = String.valueOf(rxJava.start_hour);
+        finishHour = String.valueOf(rxJava.finish_hour);
+        startMinute = String.valueOf(rxJava.start_minute);
+        finishMinute = String.valueOf(rxJava.finish_minute);
         int licznik = 0;
-        if (rxJavaExample.start_hour < 10)
+        if (rxJava.start_hour < 10)
             startHour = "0" + startHour;
-        if (rxJavaExample.finish_hour < 10)
+        if (rxJava.finish_hour < 10)
             finishHour = "0" + finishHour;
-        if (rxJavaExample.start_minute < 10)
+        if (rxJava.start_minute < 10)
             startMinute = "0" + startMinute;
-        if (rxJavaExample.finish_minute < 10)
+        if (rxJava.finish_minute < 10)
             finishMinute = "0" + finishMinute;
 
-        rxJavaExample.labelLocal = startDate + " " + startHour + ":" + startMinute + " -> " + finishDate + " " + finishHour + ":" + finishMinute;
+        rxJava.labelLocal = startDate + " " + startHour + ":" + startMinute + " -> " + finishDate + " " + finishHour + ":" + finishMinute;
 
         for (Map.Entry<Integer, Integer> entry : actorMapPushEventLocal.entrySet()) {
             if (!actorMapPushEventGlobal.containsKey(entry.getKey())) {
@@ -124,7 +124,7 @@ public class JSONObserver implements Observer<JSONObject> {
                         (e1, e2) -> e1, LinkedHashMap::new));
         licznik = 0;
         for (Map.Entry<Integer, Integer> entry : actorMapCreateEventSortedLocal.entrySet()) {
-            if (licznik < 10) {
+            if (licznik < 15) {
                 for (Actor a : actors) {
                     if (a.getId().equals(entry.getKey()))
                         actorMapCreateEventSortedOutLocal.add(new Person(a.getLogin(), String.valueOf(entry.getValue())));
@@ -139,7 +139,7 @@ public class JSONObserver implements Observer<JSONObject> {
                         (e1, e2) -> e1, LinkedHashMap::new));
         licznik = 0;
         for (Map.Entry<Integer, Integer> entry : actorMapPushEventSortedLocal.entrySet()) {
-            if (licznik < 10) {
+            if (licznik < 15) {
                 for (Actor a : actors) {
                     if (a.getId().equals(entry.getKey()))
                         actorMapPushEventSortedOutLocal.add(new Person(a.getLogin(), String.valueOf(entry.getValue())));
@@ -154,7 +154,7 @@ public class JSONObserver implements Observer<JSONObject> {
                         (e1, e2) -> e1, LinkedHashMap::new));
         licznik = 0;
         for (Map.Entry<Integer, Integer> entry : actorMapWatchEventSortedLocal.entrySet()) {
-            if (licznik < 10) {
+            if (licznik < 15) {
                 for (Actor a : actors) {
                     if (a.getId().equals(entry.getKey()))
                         actorMapWatchEventSortedOutLocal.add(new Person(a.getLogin(), String.valueOf(entry.getValue())));
@@ -169,7 +169,7 @@ public class JSONObserver implements Observer<JSONObject> {
                         (e1, e2) -> e1, LinkedHashMap::new));
         licznik = 0;
         for (Map.Entry<Integer, Integer> entry : actorMapPullEventSortedLocal.entrySet()) {
-            if (licznik < 10) {
+            if (licznik < 15) {
                 for (Actor a : actors) {
                     if (a.getId().equals(entry.getKey()))
                         actorMapPullEventSortedOutLocal.add(new Person(a.getLogin(), String.valueOf(entry.getValue())));
@@ -184,7 +184,7 @@ public class JSONObserver implements Observer<JSONObject> {
                         (e1, e2) -> e1, LinkedHashMap::new));
         licznik = 0;
         for (Map.Entry<Integer, Integer> entry : actorMapCreateEventSortedGlobal.entrySet()) {
-            if (licznik < 10) {
+            if (licznik < 15) {
                 for (Actor a : actors) {
                     if (a.getId().equals(entry.getKey()))
                         actorMapCreateEventSortedOutGlobal.add(new Person(a.getLogin(), String.valueOf(entry.getValue())));
@@ -199,7 +199,7 @@ public class JSONObserver implements Observer<JSONObject> {
                         (e1, e2) -> e1, LinkedHashMap::new));
         licznik = 0;
         for (Map.Entry<Integer, Integer> entry : actorMapPushEventSortedGlobal.entrySet()) {
-            if (licznik < 10) {
+            if (licznik < 15) {
                 for (Actor a : actors) {
                     if (a.getId().equals(entry.getKey()))
                         actorMapPushEventSortedOutGlobal.add(new Person(a.getLogin(), String.valueOf(entry.getValue())));
@@ -214,7 +214,7 @@ public class JSONObserver implements Observer<JSONObject> {
                         (e1, e2) -> e1, LinkedHashMap::new));
         licznik = 0;
         for (Map.Entry<Integer, Integer> entry : actorMapWatchEventSortedGlobal.entrySet()) {
-            if (licznik < 10) {
+            if (licznik < 15) {
                 for (Actor a : actors) {
                     if (a.getId().equals(entry.getKey()))
                         actorMapWatchEventSortedOutGlobal.add(new Person(a.getLogin(), String.valueOf(entry.getValue())));
@@ -229,7 +229,7 @@ public class JSONObserver implements Observer<JSONObject> {
                         (e1, e2) -> e1, LinkedHashMap::new));
         licznik = 0;
         for (Map.Entry<Integer, Integer> entry : actorMapPullEventSortedGlobal.entrySet()) {
-            if (licznik < 10) {
+            if (licznik < 15) {
                 for (Actor a : actors) {
                     if (a.getId().equals(entry.getKey()))
                         actorMapPullEventSortedOutGlobal.add(new Person(a.getLogin(), String.valueOf(entry.getValue())));
@@ -241,25 +241,25 @@ public class JSONObserver implements Observer<JSONObject> {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                rxJavaExample.createLocalCreate.clear();
-                rxJavaExample.createLocalWatch.clear();
-                rxJavaExample.createLocalPull.clear();
-                rxJavaExample.createLocalPush.clear();
+                rxJava.createLocalCreate.clear();
+                rxJava.createLocalWatch.clear();
+                rxJava.createLocalPull.clear();
+                rxJava.createLocalPush.clear();
                 ////////////////////////////////////
-                rxJavaExample.createGlobalCreate.clear();
-                rxJavaExample.createGlobalWatch.clear();
-                rxJavaExample.createGlobalPull.clear();
-                rxJavaExample.createGlobalPush.clear();
+                rxJava.createGlobalCreate.clear();
+                rxJava.createGlobalWatch.clear();
+                rxJava.createGlobalPull.clear();
+                rxJava.createGlobalPush.clear();
 
-                rxJavaExample.createLocalPush.addAll(actorMapPushEventSortedOutLocal);
-                rxJavaExample.createLocalWatch.addAll(actorMapWatchEventSortedOutLocal);
-                rxJavaExample.createLocalCreate.addAll(actorMapCreateEventSortedOutLocal);
-                rxJavaExample.createLocalPull.addAll(actorMapPullEventSortedOutLocal);
+                rxJava.createLocalPush.addAll(actorMapPushEventSortedOutLocal);
+                rxJava.createLocalWatch.addAll(actorMapWatchEventSortedOutLocal);
+                rxJava.createLocalCreate.addAll(actorMapCreateEventSortedOutLocal);
+                rxJava.createLocalPull.addAll(actorMapPullEventSortedOutLocal);
                 /////////////////////////////////////////////////////////////////
-                rxJavaExample.createGlobalPush.addAll(actorMapPushEventSortedOutGlobal);
-                rxJavaExample.createGlobalWatch.addAll(actorMapWatchEventSortedOutGlobal);
-                rxJavaExample.createGlobalCreate.addAll(actorMapCreateEventSortedOutGlobal);
-                rxJavaExample.createGlobalPull.addAll(actorMapPullEventSortedOutGlobal);
+                rxJava.createGlobalPush.addAll(actorMapPushEventSortedOutGlobal);
+                rxJava.createGlobalWatch.addAll(actorMapWatchEventSortedOutGlobal);
+                rxJava.createGlobalCreate.addAll(actorMapCreateEventSortedOutGlobal);
+                rxJava.createGlobalPull.addAll(actorMapPullEventSortedOutGlobal);
 
                 actorMapCreateEventSortedOutLocal.clear();
                 actorMapWatchEventSortedOutLocal.clear();
@@ -273,9 +273,9 @@ public class JSONObserver implements Observer<JSONObject> {
             }
         });
 
-        rxJavaExample.start_date = finishDate;
-        rxJavaExample.start_hour = rxJavaExample.finish_hour;
-        rxJavaExample.start_minute = rxJavaExample.finish_minute;
+        rxJava.start_date = finishDate;
+        rxJava.start_hour = rxJava.finish_hour;
+        rxJava.start_minute = rxJava.finish_minute;
         clearBoxes();
     }
 
