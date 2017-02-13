@@ -28,7 +28,7 @@ public class MyObserver implements Observer<String> {
         JSONObject obj = new JSONObject(line);
         String date = obj.getString("created_at");
         String[] date_splited = date.split("T");
-        String[] time_splited = date_splited[1].split(":"); //minuta
+        String[] time_splited = date_splited[1].split(":");
         Integer minute = Integer.valueOf(time_splited[1]);
         if (minute == temp_timestamp) {
             rxJava.finish_minute = temp_timestamp;
@@ -40,7 +40,5 @@ public class MyObserver implements Observer<String> {
             time_package.clear();
         }
         time_package.add(obj);
-
-
     }
 }
